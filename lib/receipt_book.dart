@@ -7,21 +7,21 @@ import 'package:http/http.dart' as http;
 import 'package:progress_dialog/progress_dialog.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import 'job.dart';
+import 'book.dart';
 import 'mainS.dart';
 import 'user.dart';
 
-class JobDelete extends StatefulWidget {
-  final Job job;
+class BookDelete extends StatefulWidget {
+  final BOOK book;
   final User user;
 
-  const JobDelete({Key key, this.job, this.user}) : super(key: key);
+  const BookDelete({Key key, this.book, this.user}) : super(key: key);
 
   @override
-  _JobDetailState createState() => _JobDetailState();
+  _BookDetailState createState() => _BookDetailState();
 }
 
-class _JobDetailState extends State<JobDelete> {
+class _BookDetailState extends State<BookDelete> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -38,7 +38,7 @@ class _JobDetailState extends State<JobDelete> {
             child: Container(
               padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
               child: DetailInterface(
-                job: widget.job,
+                book: widget.book,
                 user: widget.user,
               ),
             ),
@@ -59,9 +59,9 @@ class _JobDetailState extends State<JobDelete> {
 }
 
 class DetailInterface extends StatefulWidget {
-  final Job job;
+  final BOOK book;
   final User user;
-  DetailInterface({this.job, this.user});
+  DetailInterface({this.book, this.user});
 
   @override
   _DetailInterfaceState createState() => _DetailInterfaceState();
@@ -76,7 +76,7 @@ class _DetailInterfaceState extends State<DetailInterface> {
     super.initState();
     _myLocation = CameraPosition(
       target: LatLng(
-          double.parse(widget.job.joblat), double.parse(widget.job.joblon)),
+          double.parse(widget.book.booklat), double.parse(widget.book.booklon)),
       zoom: 17,
     );
     print(_myLocation.toString());
@@ -91,18 +91,18 @@ class _DetailInterfaceState extends State<DetailInterface> {
           width: 280,
           height: 200,
           child: Image.network(
-              'https://ahmedbawazir.com/flutter/images/${widget.job.jobimage}.jpg',
+              'https://ahmedbawazir.com/flutter/images/${widget.book.bookimage}.jpg',
               fit: BoxFit.fill),
         ),
         SizedBox(
           height: 10,
         ),
-        Text(widget.job.jobtitle.toUpperCase(),
+        Text(widget.book.booktitle.toUpperCase(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             )),
-        Text(widget.job.jobtime),
+        Text(widget.book.booktime),
         Container(
           alignment: Alignment.topLeft,
           child: Column(
@@ -115,12 +115,12 @@ class _DetailInterfaceState extends State<DetailInterface> {
                 TableRow(children: [
                   Text("Book Description",
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text(widget.job.jobdes),
+                  Text(widget.book.bookdes),
                 ]),
                 TableRow(children: [
                   Text("Book Price",
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("RM" + widget.job.jobprice),
+                  Text("RM" + widget.book.bookprice),
                 ]),
                 TableRow(children: [
                   Text("Book Location",
@@ -164,7 +164,7 @@ class _DetailInterfaceState extends State<DetailInterface> {
                   color: Colors.blue,
                   textColor: Colors.white,
                   elevation: 5,
-                  onPressed: _onAcceptJob,
+                  onPressed: _onAcceptBook,
                 ),
                 //MapSample(),
               )
@@ -175,7 +175,7 @@ class _DetailInterfaceState extends State<DetailInterface> {
     );
   }
 
-  void _onAcceptJob() {
+  void _onAcceptBook() {
     _showDialog();
 
     print("Delete Book");
@@ -193,7 +193,7 @@ class _DetailInterfaceState extends State<DetailInterface> {
       builder: (BuildContext context) {
         // return object of type Dialog
         return AlertDialog(
-          title: new Text("Recepit " + widget.job.jobtitle),
+          title: new Text("Recepit " + widget.book.booktitle),
           content: new Text("Are your Receipt the Book ?"),
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
@@ -217,13 +217,13 @@ class _DetailInterfaceState extends State<DetailInterface> {
   }
 
   Future<String> acceptRequest() async {
-    String urlLoadJobs = "https://ahmedbawazir.com/flutter/php/delete_job.php";
+    String urlLoadBooks = "https://ahmedbawazir.com/flutter/php/delete_book.php";
     ProgressDialog pr = new ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Delete Book");
     pr.show();
-    http.post(urlLoadJobs, body: {
-      "jobid": widget.job.jobid,
+    http.post(urlLoadBooks, body: {
+      "bookid": widget.book.bookid,
     }).then((res) {
       print(res.body);
       if (res.body == "success") {

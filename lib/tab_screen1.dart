@@ -8,8 +8,8 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'job_detail.dart';
-import 'job.dart';
+import 'book_detail.dart';
+import 'book.dart';
 import 'slide_right_route.dart';
 import 'user.dart';
 
@@ -210,22 +210,22 @@ class _TabScreenState extends State<TabScreen> {
                         color: Colors.blue[50],//color item
                         elevation: 5,
                         child: InkWell(
-                          onTap: () => _onJobDetail(
-                            data[index]['jobid'],
-                            data[index]['jobprice'],
-                            data[index]['jobdesc'],
-                            data[index]['jobowner'],
-                            data[index]['jobimage'],
-                            data[index]['jobtime'],
-                            data[index]['jobtitle'],
-                            data[index]['joblatitude'],
-                            data[index]['joblongitude'],
-                            data[index]['jobrating'],
+                          onTap: () => _onBookDetail(
+                            data[index]['bookid'],
+                            data[index]['bookprice'],
+                            data[index]['bookdesc'],
+                            data[index]['bookowner'],
+                            data[index]['bookimage'],
+                            data[index]['booktime'],
+                            data[index]['booktitle'],
+                            data[index]['booklatitude'],
+                            data[index]['booklongitude'],
+                            data[index]['bookrating'],
                             widget.user.radius,
                             widget.user.name,
                             widget.user.credit,
                           ),
-                          onLongPress: _onJobDelete,
+                          onLongPress: _onBookDelete,
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
                             child: Row(
@@ -239,14 +239,14 @@ class _TabScreenState extends State<TabScreen> {
                                       image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
-                                    "https://ahmedbawazir.com/flutter/images/${data[index]['jobimage']}.jpg"
+                                    "https://ahmedbawazir.com/flutter/images/${data[index]['bookimage']}.jpg"
                                   )))),
                                 Expanded(
                                   child: Container(
                                     child: Column(
                                       children: <Widget>[
                                         Text(
-                                            data[index]['jobtitle']
+                                            data[index]['booktitle']
                                                 .toString()
                                                 .toUpperCase(),
                                             style: TextStyle(
@@ -255,7 +255,7 @@ class _TabScreenState extends State<TabScreen> {
                                         RatingBar(
                                           itemCount: 5,
                                           itemSize: 12,
-                                          initialRating: double.parse(data[index]['jobrating']
+                                          initialRating: double.parse(data[index]['bookrating']
                                                 .toString()),
                                           itemPadding: EdgeInsets.symmetric(
                                               horizontal: 2.0),
@@ -267,14 +267,14 @@ class _TabScreenState extends State<TabScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text("RM " + data[index]['jobprice'],
+                                        Text("RM " + data[index]['bookprice'],
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic,
                                           ),),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(data[index]['jobtime'],
+                                        Text(data[index]['booktime'],
                                         style: TextStyle(
                                             fontStyle: FontStyle.italic,
                                           ),),
@@ -324,12 +324,12 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   Future<String> makeRequest() async {
-    String urlLoadJobs = "https://ahmedbawazir.com/flutter/php/load_jobs.php";
+    String _onBookDetail = "https://ahmedbawazir.com/flutter/php/load_books.php";
     ProgressDialog pr = new ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Loading Books");
     pr.show();
-    http.post(urlLoadJobs, body: {
+    http.post(_onBookDetail, body: {
       "email": widget.user.email ?? "notavail",
       "latitude": _currentPosition.latitude.toString(),
       "longitude": _currentPosition.longitude.toString(),
@@ -337,7 +337,7 @@ class _TabScreenState extends State<TabScreen> {
     }).then((res) {
       setState(() {
         var extractdata = json.decode(res.body);
-        data = extractdata["jobs"];
+        data = extractdata["books"];
         perpage = (data.length / 10);
         print("data");
         print(data);
@@ -363,38 +363,38 @@ class _TabScreenState extends State<TabScreen> {
 
   
 
-  void _onJobDetail(
-      String jobid,
-      String jobprice,
-      String jobdesc,
-      String jobowner,
-      String jobimage,
-      String jobtime,
-      String jobtitle,
-      String joblatitude,
-      String joblongitude,
-      String jobrating,
+  void _onBookDetail(
+      String bookid,
+      String bookprice,
+      String bookdesc,
+      String bookowner,
+      String bookimage,
+      String booktime,
+      String booktitle,
+      String booklatitude,
+      String booklongitude,
+      String bookrating,
       String email,
       String name,
       String credit) {
-    Job job = new Job(
-        jobid: jobid,
-        jobtitle: jobtitle,
-        jobowner: jobowner,
-        jobdes: jobdesc,
-        jobprice: jobprice,
-        jobtime: jobtime,
-        jobimage: jobimage,
-        jobworker: null,
-        joblat: joblatitude,
-        joblon: joblongitude,
-        jobrating:jobrating );
+    BOOK book = new BOOK(
+        bookid: bookid,
+        booktitle: booktitle,
+        bookowner: bookowner,
+        bookdes: bookdesc,
+        bookprice: bookprice,
+        booktime: booktime,
+        bookimage: bookimage,
+        bookworker: null,
+        booklat: booklatitude,
+        booklon: booklongitude,
+        bookrating:bookrating );
     //print(data);
     
-    Navigator.push(context, SlideRightRoute(page: JobDetail(job: job, user: widget.user)));
+    Navigator.push(context, SlideRightRoute(page: BookDetail(book: book, user: widget.user)));
   }
 
-  void _onJobDelete() {
+  void _onBookDelete() {
     print("Delete");
   }
 }

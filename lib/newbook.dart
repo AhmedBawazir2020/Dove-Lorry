@@ -15,26 +15,26 @@ import 'user.dart';
 
 File _image;
 String pathAsset = 'assets/images/add.png';
-String urlUpload = "https://ahmedbawazir.com/flutter/php/upload_job.php";
+String urlUpload = "https://ahmedbawazir.com/flutter/php/upload_book.php";
 String urlgetuser = "https://ahmedbawazir.com/flutter/php/get_user.php";
 
-TextEditingController _jobcontroller = TextEditingController();
+TextEditingController _bookcontroller = TextEditingController();
 final TextEditingController _desccontroller = TextEditingController();
 final TextEditingController _pricecontroller = TextEditingController();
 final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
 Position _currentPosition;
 String _currentAddress = "Searching your current location...";
 
-class NewJob extends StatefulWidget {
+class NewBook extends StatefulWidget {
   final User user;
 
-  const NewJob({Key key, this.user}) : super(key: key);
+  const NewBook({Key key, this.user}) : super(key: key);
 
   @override
-  _NewJobState createState() => _NewJobState();
+  _NewBookbState createState() => _NewBookbState();
 }
 
-class _NewJobState extends State<NewJob> {
+class _NewBookbState extends State<NewBook> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -53,7 +53,7 @@ class _NewJobState extends State<NewJob> {
           body: SingleChildScrollView(
             child: Container(
               padding: EdgeInsets.fromLTRB(40, 20, 40, 20),
-              child: CreateNewJob(widget.user),
+              child: CreateNewBook(widget.user),
             ),
           )),
     );
@@ -71,15 +71,15 @@ class _NewJobState extends State<NewJob> {
   }
 }
 
-class CreateNewJob extends StatefulWidget {
+class CreateNewBook extends StatefulWidget {
   final User user;
-  CreateNewJob(this.user);
+  CreateNewBook(this.user);
 
   @override
-  _CreateNewJobState createState() => _CreateNewJobState();
+  _CreateNewBookState createState() => _CreateNewBookState();
 }
 
-class _CreateNewJobState extends State<CreateNewJob> {
+class _CreateNewBookState extends State<CreateNewBook> {
   String defaultValue = 'Pickup';
   @override
   void initState() {
@@ -116,7 +116,7 @@ class _CreateNewJobState extends State<CreateNewJob> {
               new IconButton(
                   iconSize: 40,
                   icon: new Icon(Icons.directions_bike),
-                  onPressed: _changeJob),
+                  onPressed: _changebook),
               new IconButton(
                   iconSize: 40,
                   icon: new Icon(Icons.fastfood),
@@ -147,7 +147,7 @@ class _CreateNewJobState extends State<CreateNewJob> {
           ),
         ),
         TextField(
-            controller: _jobcontroller,
+            controller: _bookcontroller,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               labelText: 'Book Title',
@@ -218,7 +218,7 @@ class _CreateNewJobState extends State<CreateNewJob> {
           color: Colors.blue,
           textColor: Colors.white,
           elevation: 15,
-          onPressed: _onAddJob,
+          onPressed: _onAddbook,
         ),
       ],
     );
@@ -264,19 +264,19 @@ class _CreateNewJobState extends State<CreateNewJob> {
     );
   }
 
-  void _onAddJob() {
+  void _onAddbook() {
     if (_image == null) {
       Toast.show("Please take picture", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
     }
-    if (_jobcontroller.text.isEmpty) {
-      Toast.show("Please enter job title", context,
+    if (_bookcontroller.text.isEmpty) {
+      Toast.show("Please enter book title", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
     }
     if (_pricecontroller.text.isEmpty) {
-      Toast.show("Please enter job price", context,
+      Toast.show("Please enter book price", context,
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       return;
     }
@@ -292,9 +292,9 @@ class _CreateNewJobState extends State<CreateNewJob> {
     http.post(urlUpload, body: {
       "encoded_string": base64Image,
       "email": widget.user.email,
-      "jobtitle": _jobcontroller.text,
-      "jobdesc": _desccontroller.text,
-      "jobprice": _pricecontroller.text,
+      "booktitle": _bookcontroller.text,
+      "bookdesc": _desccontroller.text,
+      "bookprice": _pricecontroller.text,
       "latitude": _currentPosition.latitude.toString(),
       "longitude": _currentPosition.longitude.toString(),
       "credit": widget.user.credit,
@@ -307,7 +307,7 @@ class _CreateNewJobState extends State<CreateNewJob> {
           duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
       if (res.body.contains("success")) {
         _image = null;
-        _jobcontroller.text = "";
+        _bookcontroller.text = "";
         _pricecontroller.text = "";
         _desccontroller.text = "";
         pr.dismiss();
@@ -389,35 +389,35 @@ class _CreateNewJobState extends State<CreateNewJob> {
     print(result);
   }
 
-  void _changeJob() {
-    _jobcontroller.text = "Sport";
+  void _changebook() {
+    _bookcontroller.text = "Sport";
   }
  
   void _changeFood() {
-    _jobcontroller.text = "How to cook";
+    _bookcontroller.text = "How to cook";
   }
 
   void _programer() {
-    _jobcontroller.text = "Learn Java";
+    _bookcontroller.text = "Learn Java";
   }
 
   void _pphDevelper() {
-    _jobcontroller.text = "PHP code";
+    _bookcontroller.text = "PHP code";
   }
 
   void _storis() {
-    _jobcontroller.text = "The Hunger Games";
+    _bookcontroller.text = "The Hunger Games";
   }
 
   void _novels() {
-    _jobcontroller.text = "You and  Me and US";
+    _bookcontroller.text = "You and  Me and US";
   }
 
   void _bookM() {
-    _jobcontroller.text = "The Book Of Magic";
+    _bookcontroller.text = "The Book Of Magic";
   }
 
   void _bookA() {
-    _jobcontroller.text = "The Car Fix-Up Book";
+    _bookcontroller.text = "The Car Fix-Up Book";
   }
 }

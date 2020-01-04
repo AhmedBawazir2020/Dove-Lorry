@@ -15,6 +15,7 @@ import 'package:intl/intl.dart';
 import 'package:random_string/random_string.dart';
 
 import 'loginS.dart';
+import 'mainS.dart';
 import 'payment.dart';
 import 'registationS.dart';
 import 'user.dart';
@@ -257,6 +258,19 @@ class _TabScreen4State extends State<TabScreen4> {
                   ),
                   onTap: () {
                     _registerAccount();
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.subdirectory_arrow_right),
+                  title: Text(
+                    "LOG IN",
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
+                  onTap: () {
+                    _gotologinPage();
+                    // ...
                   },
                 ),
                 ListTile(
@@ -1198,7 +1212,7 @@ class _TabScreen4State extends State<TabScreen4> {
         // return object of type Dialog
         return AlertDialog(
           title: new Text(
-            "Go to login page?" + widget.user.name,
+            "Logout of account " + widget.user.name,
             style: TextStyle(
               fontStyle: FontStyle.italic,
             ),
@@ -1225,7 +1239,9 @@ class _TabScreen4State extends State<TabScreen4> {
                 await prefs.setString('pass', '');
                 print("LOGOUT");
                 Navigator.pop(
-                    context, MaterialPageRoute(builder: (context) => Splash()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) => MainScreen()));
               },
             ),
             new FlatButton(

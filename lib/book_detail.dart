@@ -1,33 +1,28 @@
 import 'dart:async';
 
+import 'package:dove_larry_0_1/book.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart';
+import 'package:toast/toast.dart';
+import 'package:http/http.dart' as http;
+import 'package:progress_dialog/progress_dialog.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'book.dart';
 import 'mainS.dart';
 import 'user.dart';
 
-
-
-
-
-
-final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
-
-
-class EditBook extends StatefulWidget {
+class BookDetail extends StatefulWidget {
+  final BOOK book;
   final User user;
-final BOOK book;
-  const EditBook({Key key, this.book, this.user}) : super(key: key);
+
+  const BookDetail({Key key, this.book, this.user}) : super(key: key);
 
   @override
-  _NewbookState createState() => _NewbookState();
+  _BookDetailState createState() => _BookDetailState();
 }
 
-class _NewbookState extends State<EditBook> {
+class _BookDetailState extends State<BookDetail> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
@@ -37,7 +32,7 @@ class _NewbookState extends State<EditBook> {
       child: Scaffold(
           resizeToAvoidBottomPadding: false,
           appBar: AppBar(
-            title: Text('DETAIL BOOK'),
+            title: Text('ACCEPT BOOK'),
             backgroundColor: Colors.blue,
           ),
           body: SingleChildScrollView(
@@ -108,12 +103,16 @@ class _DetailInterfaceState extends State<DetailInterface> {
               fontSize: 18,
               fontWeight: FontWeight.bold,
             )),
-        Text(widget.book.booktime),
+        Text(
+          widget.book.booktime,
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+          ),
+        ),
         Container(
           alignment: Alignment.topLeft,
           child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-            
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(
                 height: 5,
@@ -122,12 +121,22 @@ class _DetailInterfaceState extends State<DetailInterface> {
                 TableRow(children: [
                   Text("Book Description",
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text(widget.book.bookdes),
+                  Text(
+                    widget.book.bookdes,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ]),
                 TableRow(children: [
                   Text("Book Price",
                       style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("RM" + widget.book.bookprice),
+                  Text(
+                    "RM" + widget.book.bookprice,
+                    style: TextStyle(
+                      fontStyle: FontStyle.italic,
+                    ),
+                  ),
                 ]),
                 TableRow(children: [
                   Text("Book Location",
@@ -141,7 +150,6 @@ class _DetailInterfaceState extends State<DetailInterface> {
               Container(
                 height: 120,
                 width: 340,
-               
                 child: GoogleMap(
                   // 2
                   initialCameraPosition: _myLocation,
@@ -159,21 +167,19 @@ class _DetailInterfaceState extends State<DetailInterface> {
                 height: 10,
               ),
               Container(
-                
-                width: 300,
+                width: 350,
                 child: MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0)),
                   height: 40,
                   child: Text(
-                    'Back To MyPosted Book',
+                    'ACCEPT BOOK',
                     style: TextStyle(fontSize: 16),
                   ),
                   color: Colors.blue,
                   textColor: Colors.white,
                   elevation: 5,
-                  onPressed: (){_onLogin(widget.user.email, context);}
-,
+                  onPressed: _onAcceptBook,
                 ),
                 //MapSample(),
               )
@@ -184,9 +190,93 @@ class _DetailInterfaceState extends State<DetailInterface> {
     );
   }
 
-  
-   void _onLogin(String email, BuildContext ctx) {
-     String urlgetuser = "https://ahmedbawazir.com/flutter/php/get_user.php";
+  void _onAcceptBook() {
+    if (widget.user.email == "user@noregister") {
+      Toast.show("Please register to view accept books", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      return;
+    } else {
+      _showDialog();
+    }
+    print("Accept Book");
+  }
+
+  void _showDialog() {
+    // flutter defined function
+    if (int.parse(widget.user.credit) < 1) {
+      Toast.show("Credit not enough ", context,
+          duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+      return;
+    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text(
+            "Accept " + widget.book.booktitle,
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          content: new Text(
+            "Are your sure?",
+            style: TextStyle(
+              fontStyle: FontStyle.italic,
+            ),
+          ),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new Text("Yes"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                acceptRequest();
+              },
+            ),
+            new FlatButton(
+              child: new Text("No"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<String> acceptRequest() async {
+    String urlLoadBooks = "https://ahmedbawazir.com/flutter/php/accept_book.php";
+    ProgressDialog pr = new ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: false);
+    pr.style(message: "Accepting Book");
+    pr.show();
+    http.post(urlLoadBooks, body: {
+      "bookid": widget.book.bookid,
+      "email": widget.user.email,
+      "credit": widget.user.credit,
+    }).then((res) {
+      print(res.body);
+      if (res.body == "success") {
+        Toast.show("Success", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        pr.dismiss();
+        _onLogin(widget.user.email, context);
+      } else {
+        Toast.show("Failed", context,
+            duration: Toast.LENGTH_LONG, gravity: Toast.BOTTOM);
+        pr.dismiss();
+      }
+    }).catchError((err) {
+      print(err);
+      pr.dismiss();
+    });
+    return null;
+  }
+
+  void _onLogin(String email, BuildContext ctx) {
+    String urlgetuser = "https://ahmedbawazir.com/flutter/php/get_user.php";
 
     http.post(urlgetuser, body: {
       "email": email,
@@ -203,7 +293,7 @@ class _DetailInterfaceState extends State<DetailInterface> {
             radius: dres[4],
             credit: dres[5],
             rating: dres[6]);
-        Navigator.pop(ctx,
+        Navigator.push(ctx,
             MaterialPageRoute(builder: (context) => MainScreen(user: user)));
       }
     }).catchError((err) {

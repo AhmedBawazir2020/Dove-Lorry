@@ -17,8 +17,8 @@ double perpage = 1;
 
 class TabScreen3 extends StatefulWidget {
   final User user;
-
-  TabScreen3({Key key, this.user});
+  final BOOK book;
+  TabScreen3({Key key, this.user, this.book});
 
   @override
   _TabScreen3State createState() => _TabScreen3State();
@@ -45,7 +45,6 @@ class _TabScreen3State extends State<TabScreen3> {
         SystemUiOverlayStyle(statusBarColor: Colors.blue));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        
         home: Scaffold(
             resizeToAvoidBottomPadding: false,
             body: RefreshIndicator(
@@ -83,7 +82,10 @@ class _TabScreen3State extends State<TabScreen3> {
                                     width: 320,
                                     height: 130,
                                     child: Card(
-                                     color: Colors.lightBlue[50].withOpacity(0.70),/// color: Colors.lightBlue[50], /////color data list
+                                      color: Colors.lightBlue[50]
+                                          .withOpacity(0.70),
+
+                                      /// color: Colors.lightBlue[50], /////color data list
                                       child: Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: Column(
@@ -150,27 +152,6 @@ class _TabScreen3State extends State<TabScreen3> {
                                                 ),
                                               ],
                                             ),
-                                         /*   Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.credit_card,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Flexible(
-                                                  child: Text(
-                                                    "You have " +
-                                                        widget.user.credit +
-                                                        " Credit",
-                                                    style: TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),*/
                                           ],
                                         ),
                                       ),
@@ -213,8 +194,8 @@ class _TabScreen3State extends State<TabScreen3> {
                     return Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Card(
-                        color: Colors.blue[50],//color of item
-                        elevation: 5,//shadow
+                        color: Colors.blue[50], //color of item
+                        elevation: 5, //shadow
                         child: InkWell(
                           onTap: () => _onBookDetail(
                             data[index]['bookid'],
@@ -240,7 +221,7 @@ class _TabScreen3State extends State<TabScreen3> {
                                     height: 100,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
+                                        shape: BoxShape.rectangle,
                                         border: Border.all(color: Colors.black),
                                         image: DecorationImage(
                                             fit: BoxFit.fill,
@@ -255,8 +236,8 @@ class _TabScreen3State extends State<TabScreen3> {
                                               .toString()
                                               .toUpperCase(),
                                           style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold),
                                         ),
                                         RatingBar(
                                           itemCount: 5,
@@ -293,7 +274,9 @@ class _TabScreen3State extends State<TabScreen3> {
                                     ),
                                   ),
                                 ),
-                              ],///show the item
+                              ],
+
+                              ///show the item
                             ),
                           ),
                         ),
@@ -376,7 +359,7 @@ class _TabScreen3State extends State<TabScreen3> {
   }
 
   void _onBookDetail(
-       String bookid,
+      String bookid,
       String bookprice,
       String bookdesc,
       String bookowner,
@@ -397,18 +380,17 @@ class _TabScreen3State extends State<TabScreen3> {
         bookprice: bookprice,
         booktime: booktime,
         bookimage: bookimage,
-        bookworker: null,
+        bookbuyer: null,
         booklat: booklatitude,
         booklon: booklongitude,
         bookrating: bookrating);
     //print(data);
 
-    Navigator.push(
-        context, SlideRightRoute(page: BookDelete(book: book, user: widget.user)));
+    Navigator.push(context,
+        SlideRightRoute(page: BookDelete(book: book, user: widget.user)));
   }
 
   void _onBookDelete() {
     print("Delete");
-    
   }
 }

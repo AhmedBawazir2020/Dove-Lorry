@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:dove_larry_0_1/splashS.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
@@ -302,7 +301,7 @@ class _TabScreen4State extends State<TabScreen4> {
                           Image.asset(
                             "assets/images/blur2.png",
                             fit: BoxFit.fill,
-                            height: 495,
+                            height: 448,
                           ),
                           Column(
                             children: <Widget>[
@@ -314,7 +313,7 @@ class _TabScreen4State extends State<TabScreen4> {
                                     style: TextStyle(
                                         fontSize: 35,
                                         fontStyle: FontStyle.italic,
-                                        //     backgroundColor: Colors.black45,////
+                                        //     backgroundColor: Colors.black45,////color of back ground the text
                                         color: Colors.lightBlue[100])),
                               ),
                               SizedBox(
@@ -323,8 +322,8 @@ class _TabScreen4State extends State<TabScreen4> {
                               GestureDetector(
                                 onTap: _takePicture,
                                 child: Container(
-                                    width: 280.0,
-                                    height: 280.0,
+                                    width: 230.0,
+                                    height: 230.0,
                                     decoration: new BoxDecoration(
                                         shape: BoxShape.circle,
                                         border: Border.all(color: Colors.black),
@@ -342,43 +341,10 @@ class _TabScreen4State extends State<TabScreen4> {
                                     fontStyle: FontStyle.italic,
                                     fontSize: 25,
                                     color: Colors.white,
-                                    //     backgroundColor: Colors.black45,
                                   ),
                                 ),
                               ),
-                              /*  Container(
-                                child: Text(
-                                  widget.user.email,
-                                  style: TextStyle(
-                                    //fontWeight: FontWeight.bold,
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 17,
-                                    color: Colors.white,
-                                //    backgroundColor: Colors.black45,
-                                  ),
-                                ),
-                              ),*/
-                              /*    Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Icon(
-                                        Icons.phone_android,
-                                        color: Colors.white,
-                                      ),
-                                      Text(
-                                        widget.user.phone ?? 'not registered',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontStyle: FontStyle.italic,
-                                       //   backgroundColor: Colors.black45,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),*/
+                             
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
@@ -424,7 +390,6 @@ class _TabScreen4State extends State<TabScreen4> {
                                           color: Colors.white,
                                           fontSize: 17,
                                           fontStyle: FontStyle.italic,
-                                          //    backgroundColor: Colors.black45,
                                         ),
                                       ),
                                     ],
@@ -453,7 +418,6 @@ class _TabScreen4State extends State<TabScreen4> {
                                             color: Colors.white,
                                             fontSize: 17,
                                             fontStyle: FontStyle.italic,
-                                            //    backgroundColor: Colors.black45,
                                           ),
                                         ),
                                       ),
@@ -479,7 +443,6 @@ class _TabScreen4State extends State<TabScreen4> {
                                           color: Colors.white,
                                           fontSize: 14,
                                           fontStyle: FontStyle.italic,
-                                          //     backgroundColor: Colors.black45,
                                         ),
                                       ),
                                     ),
@@ -524,61 +487,8 @@ class _TabScreen4State extends State<TabScreen4> {
                               fontStyle: FontStyle.italic,
                             ),
                           ),
-                        ),
-                        MaterialButton(
-                          onPressed: _changePassword,
-                          child: Text(
-                            "CHANGE PASSWORD",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          onPressed: _changePhone,
-                          child: Text(
-                            "CHANGE PHONE",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          onPressed: _changeRadius,
-                          child: Text(
-                            "CHANGE RADIUS",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          onPressed: _loadPayment,
-                          child: Text(
-                            "BUY CREDIT",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          onPressed: _registerAccount,
-                          child: Text(
-                            "REGISTER",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
-                        ),
-                        MaterialButton(
-                          onPressed: _gotologinPage,
-                          child: Text(
-                            "LOG IN",
-                            style: TextStyle(
-                              fontStyle: FontStyle.italic,
-                            ),
-                          ),
                         ),*/
+                       
                         SizedBox(height: 20),
                         Expanded(
                           child: RaisedButton(

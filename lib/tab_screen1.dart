@@ -8,11 +8,10 @@ import 'package:progress_dialog/progress_dialog.dart';
 
 import 'package:http/http.dart' as http;
 
-import 'book_detail.dart';
+import 'accept_book.dart';
 import 'book.dart';
 import 'slide_right_route.dart';
 import 'user.dart';
-
 
 double perpage = 1;
 
@@ -42,15 +41,12 @@ class _TabScreenState extends State<TabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-   SystemChrome.setSystemUIOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.blue));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        
         home: Scaffold(
             resizeToAvoidBottomPadding: false,
-           
             body: RefreshIndicator(
               key: refreshKey,
               color: Colors.blue,
@@ -68,8 +64,7 @@ class _TabScreenState extends State<TabScreen> {
                             Stack(children: <Widget>[
                               Image.asset(
                                 "assets/images/bg.png",
-                            fit: BoxFit.fitWidth,
-                            
+                                fit: BoxFit.fitWidth,
                               ),
                               Column(
                                 children: <Widget>[
@@ -88,7 +83,8 @@ class _TabScreenState extends State<TabScreen> {
                                     width: 320,
                                     height: 130,
                                     child: Card(
-                                      color: Colors.lightBlue[50].withOpacity(0.70),
+                                      color: Colors.lightBlue[50]
+                                          .withOpacity(0.70),
                                       child: Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: Column(
@@ -97,8 +93,9 @@ class _TabScreenState extends State<TabScreen> {
                                           children: <Widget>[
                                             Row(
                                               children: <Widget>[
-                                                Icon(Icons.person,
-                                                    ),
+                                                Icon(
+                                                  Icons.person,
+                                                ),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
@@ -116,55 +113,44 @@ class _TabScreenState extends State<TabScreen> {
                                             ),
                                             Row(
                                               children: <Widget>[
-                                                Icon(Icons.location_on,
-                                                    ),
-                                                SizedBox(
-                                                  width: 5,
+                                                Icon(
+                                                  Icons.location_on,
                                                 ),
-                                                Flexible(
-                                                  child: Text(_currentAddress,
-                                                   style: TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                    ),),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: <Widget>[
-                                                Icon(Icons.rounded_corner,
-                                                    ),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
                                                 Flexible(
                                                   child: Text(
-                                                      "Book Radius within " +
-                                                          widget.user.radius +
-                                                          " KM", style: TextStyle(
+                                                    _currentAddress,
+                                                    style: TextStyle(
                                                       fontStyle:
                                                           FontStyle.italic,
-                                                    ),),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                         /*   Row(
+                                            Row(
                                               children: <Widget>[
-                                                Icon(Icons.credit_card,
-                                                  ),
+                                                Icon(
+                                                  Icons.rounded_corner,
+                                                ),
                                                 SizedBox(
                                                   width: 5,
                                                 ),
                                                 Flexible(
-                                                  child: Text("You have " +
-                                                      widget.user.credit +
-                                                      " Credit", style: TextStyle(
+                                                  child: Text(
+                                                    "Book Radius within " +
+                                                        widget.user.radius +
+                                                        " KM",
+                                                    style: TextStyle(
                                                       fontStyle:
                                                           FontStyle.italic,
-                                                    ),),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
-                                            ),*/
+                                            ),
                                           ],
                                         ),
                                       ),
@@ -207,7 +193,7 @@ class _TabScreenState extends State<TabScreen> {
                     return Padding(
                       padding: EdgeInsets.all(2.0),
                       child: Card(
-                        color: Colors.blue[50],//color item
+                        color: Colors.blue[50], //color item
                         elevation: 5,
                         child: InkWell(
                           onTap: () => _onBookDetail(
@@ -231,16 +217,15 @@ class _TabScreenState extends State<TabScreen> {
                             child: Row(
                               children: <Widget>[
                                 Container(
-                                  height: 100,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                      border: Border.all(color: Colors.black),
-                                      image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(
-                                    "https://ahmedbawazir.com/flutter/images/${data[index]['bookimage']}.jpg"
-                                  )))),
+                                    height: 100,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.rectangle,
+                                        border: Border.all(color: Colors.black),
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(
+                                                "https://ahmedbawazir.com/flutter/images/${data[index]['bookimage']}.jpg")))),
                                 Expanded(
                                   child: Container(
                                     child: Column(
@@ -255,8 +240,9 @@ class _TabScreenState extends State<TabScreen> {
                                         RatingBar(
                                           itemCount: 5,
                                           itemSize: 12,
-                                          initialRating: double.parse(data[index]['bookrating']
-                                                .toString()),
+                                          initialRating: double.parse(
+                                              data[index]['bookrating']
+                                                  .toString()),
                                           itemPadding: EdgeInsets.symmetric(
                                               horizontal: 2.0),
                                           itemBuilder: (context, _) => Icon(
@@ -267,17 +253,21 @@ class _TabScreenState extends State<TabScreen> {
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text("RM " + data[index]['bookprice'],
-                                        style: TextStyle(
+                                        Text(
+                                          "RM " + data[index]['bookprice'],
+                                          style: TextStyle(
                                             fontStyle: FontStyle.italic,
-                                          ),),
+                                          ),
+                                        ),
                                         SizedBox(
                                           height: 5,
                                         ),
-                                        Text(data[index]['booktime'],
-                                        style: TextStyle(
+                                        Text(
+                                          data[index]['booktime'],
+                                          style: TextStyle(
                                             fontStyle: FontStyle.italic,
-                                          ),),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -324,7 +314,8 @@ class _TabScreenState extends State<TabScreen> {
   }
 
   Future<String> makeRequest() async {
-    String _onBookDetail = "https://ahmedbawazir.com/flutter/php/load_books.php";
+    String _onBookDetail =
+        "https://ahmedbawazir.com/flutter/php/load_books.php";
     ProgressDialog pr = new ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Loading Books");
@@ -361,8 +352,6 @@ class _TabScreenState extends State<TabScreen> {
     return null;
   }
 
-  
-
   void _onBookDetail(
       String bookid,
       String bookprice,
@@ -385,17 +374,17 @@ class _TabScreenState extends State<TabScreen> {
         bookprice: bookprice,
         booktime: booktime,
         bookimage: bookimage,
-        bookworker: null,
+        bookbuyer: null,
         booklat: booklatitude,
         booklon: booklongitude,
-        bookrating:bookrating );
+        bookrating: bookrating);
     //print(data);
-    
-    Navigator.push(context, SlideRightRoute(page: BookDetail(book: book, user: widget.user)));
+
+    Navigator.push(context,
+        SlideRightRoute(page: Acceptbook(book: book, user: widget.user)));
   }
 
   void _onBookDelete() {
     print("Delete");
   }
 }
-

@@ -9,7 +9,7 @@ import 'mainS.dart';
 import 'registationS.dart';
 import 'user.dart';
 
-String urlupdate = "https://ahmedbawazir.com/flutter/php/reset/enter_email.php";
+String urlupdate = "https://ahmedbawazir.com/flutter/php/password/enter_email.php";
 
 String urlLogin = "https://ahmedbawazir.com/flutter/php/login_user.php";
 final TextEditingController _emcontroller = TextEditingController();

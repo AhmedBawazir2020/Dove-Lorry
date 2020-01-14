@@ -47,7 +47,6 @@ class _TabScreen2State extends State<TabScreen2> {
         SystemUiOverlayStyle(statusBarColor: Colors.blue));
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        
         home: Scaffold(
             resizeToAvoidBottomPadding: false,
             floatingActionButton: FloatingActionButton(
@@ -93,7 +92,10 @@ class _TabScreen2State extends State<TabScreen2> {
                                     width: 320,
                                     height: 130,
                                     child: Card(
-                                     color: Colors.lightBlue[50].withOpacity(0.70),/// color: Colors.lightBlue[50],///
+                                      color: Colors.lightBlue[50]
+                                          .withOpacity(0.70),
+
+                                      /// color: Colors.lightBlue[50],///
                                       child: Padding(
                                         padding: EdgeInsets.all(10.0),
                                         child: Column(
@@ -160,27 +162,6 @@ class _TabScreen2State extends State<TabScreen2> {
                                                 ),
                                               ],
                                             ),
-                                        /*    Row(
-                                              children: <Widget>[
-                                                Icon(
-                                                  Icons.credit_card,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Flexible(
-                                                  child: Text(
-                                                    "You have " +
-                                                        widget.user.credit +
-                                                        " Credit",
-                                                    style: TextStyle(
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),*/
                                           ],
                                         ),
                                       ),
@@ -254,7 +235,7 @@ class _TabScreen2State extends State<TabScreen2> {
                                     height: 100,
                                     width: 100,
                                     decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
+                                        shape: BoxShape.rectangle,
                                         border: Border.all(color: Colors.black),
                                         image: DecorationImage(
                                             fit: BoxFit.fill,
@@ -463,7 +444,8 @@ class _TabScreen2State extends State<TabScreen2> {
   }
 
   Future<String> deleteRequest(String bookid) async {
-    String urlLoadBooks = "https://ahmedbawazir.com/flutter/php/delete_book.php";
+    String urlLoadBooks =
+        "https://ahmedbawazir.com/flutter/php/delete_book.php";
     ProgressDialog pr = new ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
     pr.style(message: "Deleting Books");
@@ -510,14 +492,14 @@ class _TabScreen2State extends State<TabScreen2> {
         bookprice: bookprice,
         booktime: booktime,
         bookimage: bookimage,
-        bookworker: null,
+        bookbuyer: null,
         booklat: booklatitude,
         booklon: booklongitude,
         bookrating: bookrating);
     //print(data);
 
-    Navigator.push(
-        context, SlideRightRoute(page: EditBook(book: book, user: widget.user)));
+    Navigator.push(context,
+        SlideRightRoute(page: EditBook(book: book, user: widget.user)));
   }
 //////////////////////
 }

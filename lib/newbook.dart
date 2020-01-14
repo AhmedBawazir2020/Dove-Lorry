@@ -282,7 +282,7 @@ class _CreateNewBookState extends State<CreateNewBook> {
     }
     ProgressDialog pr = new ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false);
-    pr.style(message: "Requesting...");
+    pr.style(message: "Adding...");
     pr.show();
     String base64Image = base64Encode(_image.readAsBytesSync());
     print(_currentPosition.latitude.toString() +

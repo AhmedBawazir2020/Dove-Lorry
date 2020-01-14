@@ -6,7 +6,7 @@ class BOOK {
       bookprice,
       booktime,
       bookimage,
-      bookworker,
+      bookbuyer,
       booklat,
       booklon,
       bookrating;
@@ -19,7 +19,7 @@ class BOOK {
       this.bookprice,
       this.booktime,
       this.bookimage,
-      this.bookworker,
+      this.bookbuyer,
       this.booklat,
       this.booklon,
       this.bookrating});
